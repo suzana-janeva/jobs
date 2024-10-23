@@ -70,4 +70,22 @@ class GigController extends Controller
 
         return response()->json(null, 204);
     }
+
+    public function search(Request $request)
+    {
+        $gigs = $this->repo->searchGigs($request);
+
+        $data = GigResource::collection($gigs);
+
+        return response()->json($data, 200);
+    }
+    
+    public function filter(Request $request)
+    {
+        $gigs = $this->repo->filterGigs($request);
+
+        $data = GigResource::collection($gigs);
+
+        return response()->json($data, 200);
+    }
 }

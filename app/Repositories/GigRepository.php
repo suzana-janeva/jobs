@@ -4,9 +4,10 @@ namespace App\Repositories;
 
 use Carbon\Carbon;
 use App\Models\Gig;
-use App\Enum\GigStatus;
 use App\Models\Company;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class GigRepository
 {
@@ -47,5 +48,65 @@ class GigRepository
         $gig->save();
 
         return $gig;
+    }
+
+    public function searchGigs(Request $request): Collection
+    {
+        $userId = Auth::id();
+
+        //search term
+        if ($request->has('term')) {
+            $searchTerm = $request->input('term');
+
+            // search for both name and description
+            $gigs = Gig::whereHas('company', function ($query) use ($userId) {
+                $query->where('user_id', $userId);
+            })->where(function ($query) use ($searchTerm) {
+                $query->where('name', 'like', '%' . $searchTerm . '%')
+                      ->orWhere('description', 'like', '%' . $searchTerm . '%');
+            });
+        }
+
+        $allGigs = $gigs->get();
+
+        return $allGigs;
+    }
+
+    public function filterGigs(Request $request): Collection
+    {
+        $userId = Auth::id();
+
+        $query = Gig::whereHas('company', function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        });
+
+        // filter by company_id
+        if ($request->has('company_id')) {
+            $query->where('company_id', $request->input('company_id'));
+        }
+
+        // filter by progress, acceptable values: not_started, started, finished
+        if ($request->has('progress')) {
+
+            $now = Carbon::now();
+            
+            if ($request->input('progress') === 'not_started') {
+                $query->where('timestamp_start', '>', $now);
+            } elseif ($request->input('progress') === 'started') {
+                $query->where('timestamp_start', '<=', $now)
+                      ->where('timestamp_end', '>=', $now);
+            } elseif ($request->input('progress') === 'finished') {
+                $query->where('timestamp_end', '<', $now);
+            }
+        }
+
+        // filter by status
+        if ($request->has('status')) {
+            $query->where('status', $request->input('status'));
+        }
+
+        $allGigs = $query->get();
+
+        return $allGigs;
     }
 }
