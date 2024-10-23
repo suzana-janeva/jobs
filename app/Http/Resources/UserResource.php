@@ -20,6 +20,7 @@ class UserResource extends JsonResource
             'last_name' => $this->last_name,
             'email' => $this->email,
             'posted_rate' => $this->posted_rate,
+            'companies' => CompanyResource::collection($this->companies),
         ];
     }
 }

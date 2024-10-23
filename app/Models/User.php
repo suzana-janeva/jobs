@@ -49,4 +49,9 @@ class User extends Authenticatable
             'posted_rate' => 'double',
         ];
     }
+
+    public function companies()
+    {
+        return $this->hasMany(Company::class);
+    }
 }
