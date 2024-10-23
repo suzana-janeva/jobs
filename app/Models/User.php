@@ -54,4 +54,16 @@ class User extends Authenticatable
     {
         return $this->hasMany(Company::class);
     }
+
+    public function gigs(){
+        
+        return $this->hasManyThrough(
+            Gig::class,
+            Company::class,
+            'user_id',
+            'company_id',
+            'id',
+            'id'
+        );
+    }
 }
