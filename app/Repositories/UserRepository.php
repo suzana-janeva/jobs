@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Repositories;
-use Illuminate\Http\Request;
+
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class UserRepository
@@ -15,6 +16,19 @@ class UserRepository
             'email'     => $request->get('email'),
             'password'  => Hash::make($request->get('password')),
         ]);
+
+        return $user;
+    }
+
+    public function updateUser(Request $request, User $user) : User
+    {
+        $user->fill($request->except('posted_rate'));
+
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->get('password'));
+        }
+
+        $user->save();
 
         return $user;
     }
