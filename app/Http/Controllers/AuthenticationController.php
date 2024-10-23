@@ -23,6 +23,40 @@ class AuthenticationController extends Controller
         $this->repo = new UserRepository();
     }
 
+     /**
+     * @OA\Post(
+     *      path="/api/register",
+     *      description="Returns user data",
+     *      tags={"Authentication"},
+     *      summary="POST register user",
+     *      operationId="RegisterUser",
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(ref="#/components/schemas/UserRequest")
+     *      ),
+     *      @OA\Response(
+     *          response=201,
+     *          description="Successful created",
+     *          @OA\JsonContent(ref="#/components/schemas/User")
+     *       ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *      ),
+     * )
+     */
     public function register(UserRequest $request): JsonResponse
     {
         $user = $this->repo->saveUser($request);
@@ -33,6 +67,36 @@ class AuthenticationController extends Controller
         ], 201);
     }
 
+     /**
+     * @OA\Post(
+     *      path="/api/login",
+     *      description="Returns user data",
+     *      tags={"Authentication"},
+     *      summary="POST Login user",
+     *      operationId="LoginUser",
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(ref="#/components/schemas/UserLoginRequest")
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/UserLogin")
+     *      ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Invalid Credentials",
+     *      ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Invalid request body"
+     *      ),
+     * )
+     */
     public function login(UserLoginRequest $request)
     {
         $user = User::where('email', $request->email)->first();
@@ -56,6 +120,24 @@ class AuthenticationController extends Controller
         return response()->json(['error' => 'Invalid Credentials'], 401);
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/logout",
+     *     description="Logout user",
+     *     tags={"Authentication"},
+     *     summary="POST Logout user",
+     *     operationId="Logout",
+     *     security={ {"bearerAuth": {} }},
+     *     @OA\Response(
+     *          response=204,
+     *          description="Successfully logged out",
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthorized"
+     *      )
+     * )
+     */
     public function logout(Request $request)
     {
         $user = Auth::guard('api')->user();

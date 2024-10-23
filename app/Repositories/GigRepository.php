@@ -35,54 +35,36 @@ class GigRepository
     {
         $gig->fill($request->except(['company_id']));
 
-        if($request->has('timestamp_start')){
+        if ($request->has('timestamp_start')) {
             $timestampStart = Carbon::createFromFormat('m/d/Y h:i A', $request->input('timestamp_start'))->format('Y-m-d H:i:s');
             $gig->timestamp_start = $timestampStart;
         }
-       
-        if($request->has('timestamp_end')){
+
+        if ($request->has('timestamp_end')) {
             $timestampEnd = Carbon::createFromFormat('m/d/Y h:i A', $request->input('timestamp_end'))->format('Y-m-d H:i:s');
             $gig->timestamp_end = $timestampEnd;
         }
-        
+
         $gig->save();
 
         return $gig;
     }
 
-    public function searchGigs(Request $request): Collection
+    public function searchGig($term): Collection
     {
-        $userId = Auth::id();
+        $gigs = Gig::where('name', 'like', '%' . $term . '%')
+            ->orWhere('description', 'like', '%' . $term . '%')->get();
 
-        //search term
-        if ($request->has('term')) {
-            $searchTerm = $request->input('term');
-
-            // search for both name and description
-            $gigs = Gig::whereHas('company', function ($query) use ($userId) {
-                $query->where('user_id', $userId);
-            })->where(function ($query) use ($searchTerm) {
-                $query->where('name', 'like', '%' . $searchTerm . '%')
-                      ->orWhere('description', 'like', '%' . $searchTerm . '%');
-            });
-        }
-
-        $allGigs = $gigs->get();
-
-        return $allGigs;
+        return $gigs;
     }
 
     public function filterGigs(Request $request): Collection
     {
-        $userId = Auth::id();
-
-        $query = Gig::whereHas('company', function ($query) use ($userId) {
-            $query->where('user_id', $userId);
-        });
+        $gigs = Gig::query();
 
         // filter by company_id
         if ($request->has('company_id')) {
-            $query->where('company_id', $request->input('company_id'));
+            $gigs->where('company_id', $request->input('company_id'));
         }
 
         // filter by progress, acceptable values: not_started, started, finished
@@ -91,21 +73,21 @@ class GigRepository
             $now = Carbon::now();
             
             if ($request->input('progress') === 'not_started') {
-                $query->where('timestamp_start', '>', $now);
+                $gigs->where('timestamp_start', '>', $now);
             } elseif ($request->input('progress') === 'started') {
-                $query->where('timestamp_start', '<=', $now)
+                $gigs->where('timestamp_start', '<=', $now)
                       ->where('timestamp_end', '>=', $now);
             } elseif ($request->input('progress') === 'finished') {
-                $query->where('timestamp_end', '<', $now);
+                $gigs->where('timestamp_end', '<', $now);
             }
         }
 
         // filter by status
         if ($request->has('status')) {
-            $query->where('status', $request->input('status'));
+            $gigs->where('status', $request->input('status'));
         }
 
-        $allGigs = $query->get();
+        $allGigs = $gigs->get();
 
         return $allGigs;
     }

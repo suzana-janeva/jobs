@@ -14,7 +14,7 @@ Route::middleware('auth:api')->group(function () {
     Route::apiResource('user', UserController::class)->except(['store','destroy']); 
     Route::apiResource('company', CompanyController::class);
     Route::apiResource('company/{company}/gig', GigController::class);
-    Route::get('/gigs/search', [GigController::class, 'search']);
+    Route::get('/gigs/search/{term}', [GigController::class, 'search']);
     Route::get('/gigs/filter', [GigController::class, 'filter']);
     Route::post('logout', [AuthenticationController::class, 'logout']);
 });

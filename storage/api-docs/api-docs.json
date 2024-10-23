@@ -1,0 +1,1589 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Gigs API",
+        "description": "API documentation for Gigs API.",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "POST register user",
+                "description": "Returns user data",
+                "operationId": "RegisterUser",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "POST Login user",
+                "description": "Returns user data",
+                "operationId": "LoginUser",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserLoginRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserLogin"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Invalid Credentials"
+                    },
+                    "422": {
+                        "description": "Invalid request body"
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "POST Logout user",
+                "description": "Logout user",
+                "operationId": "Logout",
+                "responses": {
+                    "204": {
+                        "description": "Successfully logged out"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/company/{id}/gig": {
+            "get": {
+                "tags": [
+                    "Company/Gig"
+                ],
+                "summary": "GET (all) gigs",
+                "description": "Returns list of gigs",
+                "operationId": "GetGigs",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Company id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GigResource"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Company/Gig"
+                ],
+                "summary": "POST (add) gig",
+                "description": "Returns gig",
+                "operationId": "addGig",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Company id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/GigRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GigResource"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/company/{company_id}/gig/{gig_id}": {
+            "get": {
+                "tags": [
+                    "Company/Gig"
+                ],
+                "summary": "GET Gig",
+                "description": "Show Gig",
+                "operationId": "showGig",
+                "parameters": [
+                    {
+                        "name": "company_id",
+                        "in": "path",
+                        "description": "Company id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "gig_id",
+                        "in": "path",
+                        "description": "Gig id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GigResource"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Company/Gig"
+                ],
+                "summary": "UPDATE Gig",
+                "description": "UPDATE gig",
+                "operationId": "updateGig",
+                "parameters": [
+                    {
+                        "name": "company_id",
+                        "in": "path",
+                        "description": "Company id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "gig_id",
+                        "in": "path",
+                        "description": "Gig id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/GigUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GigResource"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Company/Gig"
+                ],
+                "summary": "DELETE Gig",
+                "description": "Deletes a record and returns no content",
+                "operationId": "deleteGig",
+                "parameters": [
+                    {
+                        "name": "company_id",
+                        "in": "path",
+                        "description": "Company id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "gig_id",
+                        "in": "path",
+                        "description": "Gig id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "The resource was deleted successfully."
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/gigs/search/{term}": {
+            "get": {
+                "tags": [
+                    "Gig/Search"
+                ],
+                "summary": "GET SearchGigs",
+                "description": "Search gigs by term (both name and description)",
+                "operationId": "searchGigs",
+                "parameters": [
+                    {
+                        "name": "term",
+                        "in": "path",
+                        "description": "Term",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful searching",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GigResource"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/gigs/filter": {
+            "get": {
+                "tags": [
+                    "Gig/Filter"
+                ],
+                "summary": "GET FilterGigs",
+                "description": "Filter gigs by company_id, progress(not_started, started, finished) and status(Draft, Posted)",
+                "operationId": "filterGigs",
+                "parameters": [
+                    {
+                        "name": "company_id",
+                        "in": "query",
+                        "description": "Filter by company ID",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "progress",
+                        "in": "query",
+                        "description": "Filter by progress(not_started, started, finished)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "not_started",
+                                "started",
+                                "finished"
+                            ],
+                            "example": "started"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Filter by status(0 - Draft, 1 -Posted)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful filtering",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GigResource"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/company": {
+            "get": {
+                "tags": [
+                    "Company"
+                ],
+                "summary": "GET (all) companies",
+                "description": "Returns list of companies for auth user",
+                "operationId": "GetCompanies",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Company"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Company"
+                ],
+                "summary": "POST (add) company",
+                "description": "Returns company",
+                "operationId": "addCompany",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CompanyRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CompanyResource"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/company/{id}": {
+            "get": {
+                "tags": [
+                    "Company"
+                ],
+                "summary": "GET Company",
+                "description": "Show company",
+                "operationId": "showCompany",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Company id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CompanyResource"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Company"
+                ],
+                "summary": "UPDATE Company",
+                "description": "UPDATE Company",
+                "operationId": "updateCompany",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Company id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CompanyUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CompanyResource"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Company"
+                ],
+                "summary": "DELETE Company",
+                "description": "Deletes a record and returns no content",
+                "operationId": "deleteCompany",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Company id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "The resource was deleted successfully."
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "GET user profile",
+                "description": "Profile",
+                "operationId": "profile",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user/{id}": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "GET User",
+                "description": "Show user",
+                "operationId": "showUser",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserResource"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "UPDATE User",
+                "description": "UPDATE user",
+                "operationId": "updateUser",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserResource"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "CompanyRequest": {
+                "title": "Create Company Request",
+                "description": "Create Company request body data",
+                "required": [
+                    "name",
+                    "address"
+                ],
+                "properties": {
+                    "name": {
+                        "title": "Name",
+                        "description": "Company's name",
+                        "type": "string",
+                        "example": "Company name"
+                    },
+                    "description": {
+                        "title": "Description",
+                        "description": "Description of the company",
+                        "type": "string",
+                        "example": "Doe"
+                    },
+                    "address": {
+                        "title": "Address",
+                        "description": "Company's address",
+                        "type": "string",
+                        "example": "Company's address"
+                    }
+                },
+                "type": "object"
+            },
+            "CompanyUpdateRequest": {
+                "title": "Update Company Request",
+                "description": "Update Company request body data",
+                "properties": {
+                    "name": {
+                        "title": "Name",
+                        "description": "Company's name",
+                        "type": "string",
+                        "example": "Company name"
+                    },
+                    "description": {
+                        "title": "Description",
+                        "description": "Description of the company",
+                        "type": "string",
+                        "example": "Doe"
+                    },
+                    "address": {
+                        "title": "Address",
+                        "description": "Company's address",
+                        "type": "string",
+                        "example": "Company's address"
+                    }
+                },
+                "type": "object"
+            },
+            "GigRequest": {
+                "title": "Create Gig Request",
+                "description": "Create Gig request body data",
+                "required": [
+                    "name",
+                    "timestamp_start",
+                    "timestamp_end",
+                    "number_of_positions",
+                    "pay_per_hour"
+                ],
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "Gig's name",
+                        "type": "string",
+                        "example": "Gig name"
+                    },
+                    "description": {
+                        "title": "Description",
+                        "description": "Description of the Gig",
+                        "type": "string",
+                        "example": "Doe"
+                    },
+                    "timestamp_start": {
+                        "title": "Timestamp start",
+                        "description": "Gig's timestamp start",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "10/25/2024 12:00 AM"
+                    },
+                    "timestamp_end": {
+                        "title": "Timestamp end",
+                        "description": "Gig's timestamp end",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "10/27/2024 12:00 PM"
+                    },
+                    "number_of_positions": {
+                        "title": "Number of positions",
+                        "description": "Gig's number of positions",
+                        "type": "integer",
+                        "example": "10"
+                    },
+                    "pay_per_hour": {
+                        "title": "Pay per hour",
+                        "description": "Gig's pay per hour",
+                        "type": "number",
+                        "format": "double",
+                        "example": 35.5
+                    },
+                    "status": {
+                        "title": "Status",
+                        "description": "Gig's status",
+                        "type": "boolean",
+                        "example": 0
+                    }
+                },
+                "type": "object"
+            },
+            "GigUpdateRequest": {
+                "title": "Update Gig Request",
+                "description": "Update Gig request body data",
+                "properties": {
+                    "name": {
+                        "title": "Name",
+                        "description": "Gig's name",
+                        "type": "string",
+                        "example": "Gig name"
+                    },
+                    "description": {
+                        "title": "Description",
+                        "description": "Description of the Gig",
+                        "type": "string",
+                        "example": "Doe"
+                    },
+                    "timestamp_start": {
+                        "title": "Timestamp start",
+                        "description": "Gig's timestamp start",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "10/25/2024 12:00 AM"
+                    },
+                    "timestamp_end": {
+                        "title": "Timestamp end",
+                        "description": "Gig's timestamp end",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "10/27/2024 12:00 PM"
+                    },
+                    "number_of_positions": {
+                        "title": "Number of positions",
+                        "description": "Gig's number of positions",
+                        "type": "integer",
+                        "example": "10"
+                    },
+                    "pay_per_hour": {
+                        "title": "Pay per hour",
+                        "description": "Gig's pay per hour",
+                        "type": "number",
+                        "format": "double",
+                        "example": 35.5
+                    },
+                    "status": {
+                        "title": "Gig's status",
+                        "description": "Gig's status",
+                        "type": "boolean",
+                        "example": 1
+                    }
+                },
+                "type": "object"
+            },
+            "Company": {
+                "title": "Company",
+                "description": "Company model",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "Company's name",
+                        "type": "string",
+                        "example": "Company name"
+                    },
+                    "description": {
+                        "title": "Description",
+                        "description": "Description of the company",
+                        "type": "string",
+                        "example": "Doe"
+                    },
+                    "address": {
+                        "title": "Address",
+                        "description": "Company's address",
+                        "type": "string",
+                        "example": "Company's address"
+                    },
+                    "user": {
+                        "properties": {
+                            "id": {
+                                "type": "integer",
+                                "example": 10
+                            },
+                            "first_name": {
+                                "type": "string",
+                                "example": "John"
+                            },
+                            "last_name": {
+                                "type": "string",
+                                "example": "John"
+                            },
+                            "email": {
+                                "type": "string",
+                                "example": "johndoe@example.com"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "gigs": {
+                        "title": "user gigs",
+                        "description": "user gigs",
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer",
+                                    "example": 1
+                                },
+                                "name": {
+                                    "type": "string",
+                                    "example": "gig name"
+                                },
+                                "description": {
+                                    "type": "string",
+                                    "example": "gig description"
+                                },
+                                "timestamp_start": {
+                                    "type": "string",
+                                    "example": "09/24/2024 12:00 PM"
+                                },
+                                "timestamp_end": {
+                                    "type": "string",
+                                    "example": "09/25/2024 12:00 PM"
+                                },
+                                "number_of_positions": {
+                                    "type": "integer",
+                                    "example": 45
+                                },
+                                "pay_per_hour": {
+                                    "type": "number",
+                                    "format": "double",
+                                    "example": 4.5
+                                },
+                                "status": {
+                                    "type": "boolean",
+                                    "example": 0
+                                },
+                                "company": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 10
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "company_name"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Company"
+                }
+            },
+            "Gig": {
+                "title": "Gig",
+                "description": "Gig model",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "Gig's name",
+                        "type": "string",
+                        "example": "Gig name"
+                    },
+                    "description": {
+                        "title": "Description",
+                        "description": "Description of the Gig",
+                        "type": "string",
+                        "example": "Doe"
+                    },
+                    "timestamp_start": {
+                        "title": "Timestamp start",
+                        "description": "Gig's timestamp start",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "10/25/2024 12:00 AM"
+                    },
+                    "timestamp_end": {
+                        "title": "Timestamp end",
+                        "description": "Gig's timestamp end",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "10/27/2024 12:00 PM"
+                    },
+                    "number_of_positions": {
+                        "title": "Number of positions",
+                        "description": "Gig's number of positions",
+                        "type": "integer",
+                        "example": "10"
+                    },
+                    "pay_per_hour": {
+                        "title": "Pay per hour",
+                        "description": "Gig's pay per hour",
+                        "type": "number",
+                        "format": "double",
+                        "example": 35.5
+                    },
+                    "status": {
+                        "title": "Status",
+                        "description": "Gig's status",
+                        "type": "boolean",
+                        "example": 0
+                    },
+                    "company": {
+                        "properties": {
+                            "id": {
+                                "type": "integer",
+                                "example": 10
+                            },
+                            "name": {
+                                "type": "string",
+                                "example": "Company name"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Gig"
+                }
+            },
+            "User": {
+                "title": "User",
+                "description": "User model",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "first_name": {
+                        "title": "First Name",
+                        "description": "User's first name",
+                        "type": "string",
+                        "example": "John"
+                    },
+                    "last_name": {
+                        "title": "Last Name",
+                        "description": "User's last name",
+                        "type": "string",
+                        "example": "Doe"
+                    },
+                    "email": {
+                        "title": "Email",
+                        "description": "User's email address",
+                        "type": "string",
+                        "example": "john@doe.com"
+                    },
+                    "posted_rate": {
+                        "title": "Posted Rate",
+                        "description": "User's posted rate",
+                        "type": "number",
+                        "format": "double",
+                        "example": 4.5
+                    },
+                    "companies": {
+                        "title": "user companies",
+                        "description": "user companies",
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer",
+                                    "example": 1
+                                },
+                                "name": {
+                                    "type": "string",
+                                    "example": "company name"
+                                },
+                                "description": {
+                                    "type": "string",
+                                    "example": "company description"
+                                },
+                                "address": {
+                                    "type": "string",
+                                    "example": "company address"
+                                },
+                                "number_of_posted_gigs": {
+                                    "type": "integer",
+                                    "example": 45
+                                },
+                                "number_of_started_gigs": {
+                                    "type": "integer",
+                                    "example": 4
+                                },
+                                "user": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 10
+                                        },
+                                        "first_name": {
+                                            "type": "string",
+                                            "example": "John"
+                                        },
+                                        "last_name": {
+                                            "type": "string",
+                                            "example": "John"
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "example": "johndoe@example.com"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "gigs": {
+                        "title": "user gigs",
+                        "description": "user gigs",
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer",
+                                    "example": 1
+                                },
+                                "name": {
+                                    "type": "string",
+                                    "example": "gig name"
+                                },
+                                "description": {
+                                    "type": "string",
+                                    "example": "gig description"
+                                },
+                                "timestamp_start": {
+                                    "type": "string",
+                                    "example": "09/24/2024 12:00 PM"
+                                },
+                                "timestamp_end": {
+                                    "type": "string",
+                                    "example": "09/25/2024 12:00 PM"
+                                },
+                                "number_of_positions": {
+                                    "type": "integer",
+                                    "example": 45
+                                },
+                                "pay_per_hour": {
+                                    "type": "number",
+                                    "format": "double",
+                                    "example": 4.5
+                                },
+                                "status": {
+                                    "type": "boolean",
+                                    "example": 0
+                                },
+                                "company": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 10
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "company_name"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "User"
+                }
+            },
+            "UserLogin": {
+                "title": "User Login",
+                "description": "The user login return by the response",
+                "properties": {
+                    "token_type": {
+                        "title": "Token type",
+                        "description": "This will always be 'Bearer'",
+                        "type": "string",
+                        "example": "Bearer"
+                    },
+                    "expires_in": {
+                        "title": "Expires In",
+                        "description": "Expiration time of the token expressed in seconds counting from the moment of receiving it.",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 7200
+                    },
+                    "access_token": {
+                        "title": "Access Token",
+                        "description": "The Access Token (JWT). Valid for 8h.",
+                        "type": "string",
+                        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                    },
+                    "refresh_token": {
+                        "title": "Refresh Access Token",
+                        "description": "The standard Refresh Token. Valid for 24h.",
+                        "type": "string",
+                        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "UserLogin"
+                }
+            },
+            "CompanyResource": {
+                "title": "CompanyResource",
+                "description": "Company resource",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/Company"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "CompanyResource"
+                }
+            },
+            "GigResource": {
+                "title": "GigResource",
+                "description": "Gig resource",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/Gig"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "GigResource"
+                }
+            },
+            "UserResource": {
+                "title": "UserResource",
+                "description": "User resource",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/User"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "UserResource"
+                }
+            },
+            "UserLoginRequest": {
+                "title": "Login User Request",
+                "description": "Login User request body data",
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "email": {
+                        "title": "email",
+                        "description": "Email Address",
+                        "type": "string",
+                        "example": "john@doe.com"
+                    },
+                    "password": {
+                        "title": "Password",
+                        "description": "Password",
+                        "type": "string",
+                        "example": "passwordCreate12"
+                    }
+                },
+                "type": "object"
+            },
+            "UserRequest": {
+                "title": "Create User Request",
+                "description": "Create User request body data",
+                "required": [
+                    "first_name",
+                    "last_name",
+                    "email",
+                    "password",
+                    "password_confirmation"
+                ],
+                "properties": {
+                    "first_name": {
+                        "title": "First name",
+                        "description": "User's first name",
+                        "type": "string",
+                        "example": "John"
+                    },
+                    "last_name": {
+                        "title": "Last Name",
+                        "description": "User's last name",
+                        "type": "string",
+                        "example": "Doe"
+                    },
+                    "email": {
+                        "title": "Email",
+                        "description": "User's email address",
+                        "type": "string",
+                        "example": "john@doe.com"
+                    },
+                    "password": {
+                        "title": "Password",
+                        "description": "Password must be at least 8 characters long and contain a mix of letters and numbers.",
+                        "type": "string",
+                        "example": "passwordCreate12"
+                    },
+                    "password_confirmation": {
+                        "title": "Password confirmation",
+                        "description": "Password confirmation",
+                        "type": "string",
+                        "example": "passwordCreate12"
+                    }
+                },
+                "type": "object"
+            },
+            "UserUpdateRequest": {
+                "title": "Update User Request",
+                "description": "Update User request body data",
+                "properties": {
+                    "first_name": {
+                        "title": "First name",
+                        "description": "User's first name",
+                        "type": "string",
+                        "example": "John"
+                    },
+                    "last_name": {
+                        "title": "Last Name",
+                        "description": "User's last name",
+                        "type": "string",
+                        "example": "Doe"
+                    },
+                    "email": {
+                        "title": "Email",
+                        "description": "User's email address",
+                        "type": "string",
+                        "example": "john@doe.com"
+                    },
+                    "password": {
+                        "title": "Password",
+                        "description": "Password must be at least 8 characters long and contain a mix of letters and numbers.",
+                        "type": "string",
+                        "example": "passwordCreate12"
+                    },
+                    "password_confirmation": {
+                        "title": "Password confirmation",
+                        "description": "Password confirmation",
+                        "type": "string",
+                        "example": "passwordCreate12"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "name": "bearerAuth",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            },
+            "passport": {
+                "type": "oauth2",
+                "description": "Laravel passport oauth2 security.",
+                "in": "header",
+                "scheme": "https",
+                "flows": {
+                    "password": {
+                        "authorizationUrl": "http://gigs.devs/oauth/authorize",
+                        "tokenUrl": "http://gigs.devs/oauth/token",
+                        "refreshUrl": "http://gigs.devs/token/refresh",
+                        "scopes": []
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Authentication",
+            "description": "Authentication"
+        },
+        {
+            "name": "Company/Gig",
+            "description": "Company/Gig"
+        },
+        {
+            "name": "Gig/Search",
+            "description": "Gig/Search"
+        },
+        {
+            "name": "Gig/Filter",
+            "description": "Gig/Filter"
+        },
+        {
+            "name": "Company",
+            "description": "Company"
+        },
+        {
+            "name": "User",
+            "description": "User"
+        }
+    ]
+}
