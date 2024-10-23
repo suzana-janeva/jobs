@@ -345,7 +345,6 @@ class GigController extends Controller
      *          @OA\Schema(
      *              type="string",
      *              enum={"not_started", "started", "finished"},
-     *              example="started"
      *          )
      *     ),
      *     @OA\Parameter(

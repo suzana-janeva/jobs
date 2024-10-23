@@ -447,8 +447,7 @@
                                 "not_started",
                                 "started",
                                 "finished"
-                            ],
-                            "example": "started"
+                            ]
                         }
                     },
                     {
