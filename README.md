@@ -22,6 +22,7 @@ Execute this command in the terminal to calculate the posted rate:
 ## Start APP
 1. Run `composer install` to install dependencies.
 2. Run `php artisan migrate` to migrate the database.
+3. Run `php artisan passport:client --password` to generate Client ID and Client Secret key
 3. Generate Swagger documentation: `php artisan l5-swagger:generate`
 4. Calculate the posted rate: `php artisan app:posted-rate`
 
