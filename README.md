@@ -1,4 +1,4 @@
-# Gigs API
+# Freelance jobs API
 
 ## Passport Implementation
 Add the following in `.env` file for password grant:
@@ -12,7 +12,7 @@ Add this to your `.env` file for Swagger:
 To generate Swagger documentation, execute:
 - `php artisan l5-swagger:generate`
 
-- Example for displaying docs: [http://gigs.devs/api/documentation]
+- Example for displaying docs: [http://jobs.devs/api/documentation]
 
 ## Command Line
 Execute this command in the terminal to calculate the posted rate:

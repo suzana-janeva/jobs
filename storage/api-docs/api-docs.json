@@ -1,8 +1,8 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Gigs API",
-        "description": "API documentation for Gigs API.",
+        "title": "Freelance jobs API",
+        "description": "API documentation for Freelance jobs API.",
         "version": "1.0.0"
     },
     "paths": {
@@ -1550,9 +1550,9 @@
                 "scheme": "https",
                 "flows": {
                     "password": {
-                        "authorizationUrl": "http://gigs.devs/oauth/authorize",
-                        "tokenUrl": "http://gigs.devs/oauth/token",
-                        "refreshUrl": "http://gigs.devs/token/refresh",
+                        "authorizationUrl": "http://jobs.devs//oauth/authorize",
+                        "tokenUrl": "http://jobs.devs//oauth/token",
+                        "refreshUrl": "http://jobs.devs//token/refresh",
                         "scopes": []
                     }
                 }

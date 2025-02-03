@@ -5,9 +5,9 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 /**
  * @OA\Info(
- *    title="Gigs API",
+ *    title="Freelance jobs API",
  *    version="1.0.0",
- *    description="API documentation for Gigs API."
+ *    description="API documentation for Freelance jobs API."
  * ),
  * 
  *  * @OA\SecurityScheme(
